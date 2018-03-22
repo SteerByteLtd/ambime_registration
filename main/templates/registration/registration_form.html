@@ -1,0 +1,62 @@
+{% extends 'registration/registration_base.html' %}
+{% load i18n %}
+{% load custom_tag %}
+{% load static %}
+
+{% block content %}
+    <body class=" login">
+        <!-- BEGIN LOGIN -->
+        <div class="content">
+
+            <form class="register-form" action="" method="post">
+                {% csrf_token %}
+                <h3>Sign Up</h3>
+                <p> Enter your personal details below: </p>
+                {% for field in form %}
+                    {% if field.errors %}
+                    <div class="form-group  has-error">
+                    {% else %}
+                    <div class="form-group">
+                    {% endif %}
+                        <label class="control-label">{{ field.label }}</label>
+                        <div class="input-icon">
+                            {% if field.label == "Username" %}
+                                <i class="fa fa-user"></i>
+                            {% elif field.label == "First name" %}
+                                <i class="fa fa-font"></i>
+                            {% elif field.label == "Last name" %}
+                                <i class="fa fa-font"></i>
+                            {% elif field.label == "E-mail" %}
+                                <i class="fa fa-envelope"></i>
+                            {% elif field.label == "Landline1" %}
+                                <i class="fa fa-phone"></i>
+                            {% elif field.label == "Landline2" %}
+                                <i class="fa fa-phone-square"></i>
+                            {% elif field.label == "Password" %}
+                                <i class="fa fa-lock"></i>
+                            {% elif field.label == "Password confirmation" %}
+                                <i class="fa fa-unlock-alt"></i>
+                            {% elif field.label == "Referred Email" %}
+                                <i class="fa fa-child"></i>
+                            {% endif %}
+
+                            {% if field.label == 'Network provider1' or field.label == 'Network provider2' %}
+                                {{ field | add_class:'select2 form-control'}}
+                            {% else %}
+                                {{ field | add_class:'form-control placeholder-no-fix'}}
+                            {% endif %}
+                        </div>
+
+                        {% for error in field.errors %}
+                            <span class="help-block">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                <div class="form-actions">
+                    <a href="{% url 'login' %}"><button id="register-back-btn" type="button" class="btn red btn-outline">Back</button></a>
+                    <button type="submit" id="register-submit-btn" class="btn green pull-right"> Sign Up </button>
+                </div>
+            </form>
+        </div>
+    </body>
+{% endblock %}

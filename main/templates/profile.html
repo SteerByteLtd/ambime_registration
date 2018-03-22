@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Account Profile{% endblock %}
+
+{% block content %}
+    <h1>Hello, {{ user.first_name }} {{ user.last_name }}</h1>
+    <div>Total AmbiMe Credit:{{ total_credit }}</div>
+    <div>Today's Credit Earned Credit:{{ today_credit }}</div>
+    <div>Cashback from Referrals:{{ total_referral_balance }}</div>
+    <div>Total Cashback:{{ total_cashback }}</div>
+    <div>
+        <p>{{ user.landline1 }}</p>
+        <p>{{ user.landline2 }}</p>
+    </div>
+{% endblock %}
