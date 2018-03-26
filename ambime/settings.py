@@ -7,8 +7,12 @@ STATIC_URL = '/static/'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'dr.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ambime',
+        'USER': 'steerbyte',
+        'PASSWORD': '',
+        'HOST': '52.56.171.15',
+        'PORT': '5432'
     },
 }
 
