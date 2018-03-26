@@ -15,6 +15,7 @@ from .models import *
 from _datetime import datetime
 from main.forms import ResendActivationForm
 from django.db.models import Q
+from datetime import timedelta
 
 REGISTRATION_FORM_PATH = getattr(settings, 'REGISTRATION_FORM',
                                  'main.forms.RegistrationForm')
@@ -26,48 +27,139 @@ ACCOUNT_AUTHENTICATED_REGISTRATION_REDIRECTS = getattr(
 class UserProfileView(View):
     template_name = 'profile.html'
 
-    def get(self, request):
-        user = request.user
-        today = datetime.now().date()
-        day_of_month = today.replace()
+    def last_day_of_month(self, date):
+        next_month = date.replace(day=28) + datetime.timedelta(days=4)
+        return next_month - datetime.timedelta(days=next_month.day)
+
+    def get_credits(self, user, today, flag=True):
 
         # Calculate User's own credit
         previous_duration = 0
         today_duration = 0
+        day_of_month = today.replace(day=1)
 
+        # Total credits from first day of moth to yesterday
         past_call_history = Call_History.objects.filter(
-            Q(user=user) and Q(date__lt=today) and Q(date__gte=day_of_month)).all()
+            Q(user_id=user.id) & Q(date__lt=today) & Q(date__gte=day_of_month)).all()
         if past_call_history:
             for call in past_call_history:
                 if "min" in call.duration:
                     duration = call.duration.split("min")[0]
                     previous_duration += int(duration)
 
-        today_call_history = Call_History.objects.filter(Q(user=user) and Q(date=today)).all()
+        # Total credits of today
+        today_call_history = Call_History.objects.filter(Q(user_id=user.id) & Q(date=today)).all()
         if today_call_history:
             for call in today_call_history:
                 if "min" in call.duration:
                     duration = call.duration.split("min")[0]
                     today_duration += int(duration)
 
+        if flag == True:  # If flag=True, return total credit count
+            return previous_duration+today_duration
+        else:  # If flag=False, return today credit count
+            return today_duration
+
+    def get(self, request):
+        year_list = []
+        for i in range(2017, 2101):
+            year_list.append(i)
+
+        month_name_list = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                           "October", "November", "December"]
+
+        if 'year-filter' in request.GET:
+            year = int(request.GET['year-filter'])
+            month = int(request.GET['month-filter'])
+            date = datetime(year, month+1, 1).date()-timedelta(days=1)
+            result = []
+            users = User.objects.all()
+            for user in users:
+                referred_by = User.objects.filter(email=user.referred_by).first()
+                referred_user_name = "{} {}".format(referred_by.first_name, referred_by.last_name)
+                total_credit = self.get_credits(user, date, True)
+
+                # Calculate Referral Count
+                total_referral_count = 0
+                referred_users = User.objects.filter(referred_by=user.email).all()
+
+                for referred_user in referred_users:
+                    total_referral_count += self.get_credits(referred_user, date, True)
+
+                total_referral_balance = round(total_referral_count * 0.004, 2)
+                total_month_cashback = round(total_credit * 0.04 + total_referral_balance, 2)
+
+                user_info = {
+                    'user': user,
+                    'total_credit': total_credit,
+                    'total_personal_balance': round(total_credit * 0.04, 2),
+                    'referred_by': referred_user_name,
+                    'total_ref_balance': total_referral_balance,
+                    'total_balance': total_month_cashback
+                }
+                result.append(user_info)
+
+            return render(request, self.template_name, {
+                'workbook': result,
+                'filter_year': year,
+                'filter_month': month_name_list[month-1],
+                'year_list': year_list,
+                'month_list': month_name_list
+            })
+
+        current_user = request.user
+        today = datetime.now().date()
+
+        today_credit = self.get_credits(current_user, today, False)
+        total_credit = self.get_credits(current_user, today, True)
+
         # Calculate Referral Count
         total_referral_count = 0
-        referred_users = User.objects.filter(referred_by=user.email).all()
+        referred_users = User.objects.filter(referred_by=current_user.email).all()
+
         for user in referred_users:
-            calls = Call_History.objects.filter(
-                Q(user=user) and Q(date__lte=today) and Q(date__gte=day_of_month)).all()
-            for call in calls:
-                if "min" in call.duration:
-                    duration = call.duration.split("min")[0]
-                    total_referral_count += int(duration)
+            total_referral_count += self.get_credits(user, today, True)
 
         total_referral_balance = round(total_referral_count*0.004, 2)
-        total_month_cashback = round((previous_duration+today_duration)*0.04+total_referral_balance, 2)
-        return render(request, self.template_name, {'total_credit': previous_duration+today_duration,
-                                                    'today_credit': today_duration,
+        total_month_cashback = round(total_credit*0.04+total_referral_balance, 2)
+
+        # Last Four Months' data
+        last_four_months = []
+        date = today
+        for i in range(1, 5):
+            date = date.replace(day=1)-timedelta(days=1)
+
+            #Calculate cashback of each month of last 4
+            credits = self.get_credits(current_user, date, True)
+            referral_count = 0
+            referred_users = User.objects.filter(referred_by=current_user.email).all()
+            for user in referred_users:
+                referral_count += self.get_credits(user, date, True)
+            referral_balance = round(referral_count * 0.004, 2)
+            month_cashback = round(credits * 0.04 + referral_balance, 2)
+
+            if month_cashback == 0:
+                month_cashback_str = 'Nill'
+            else:
+                month_cashback_str = "£{}".format(month_cashback)
+
+            month_data = {"month_name": date.strftime("%B"), "status": "N/A", "cash": month_cashback_str}
+
+            last_four_months.insert(i - 1, month_data)
+
+        #Save total credit of user
+        current_user.credit_count = total_credit
+        current_user.save()
+        return render(request, self.template_name, {'total_credit': total_credit,
+                                                    'today_credit': today_credit,
                                                     'total_referral_balance': total_referral_balance,
                                                     'total_cashback': total_month_cashback,
-                                                    'user': user})
+                                                    'user': current_user,
+                                                    'current_month': today.strftime("%B").upper(),
+                                                    'four_months_info': last_four_months,
+                                                    'year_list': year_list,
+                                                    'month_list': month_name_list
+                                                    })
 
 class RegistrationView(FormView):
     """

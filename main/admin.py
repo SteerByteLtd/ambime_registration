@@ -11,7 +11,7 @@ from .users import UsernameField
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['username', 'get_name', 'email', 'landline1', 'landline2', 'is_active']
+    list_display = ['username', 'get_name', 'email', 'landline1', 'landline2', 'credit_count', 'is_active']
     search_fields = ('username', 'first_name', 'last_name')
     list_filter = ['is_superuser']
 
@@ -78,12 +78,15 @@ class CallHistoryResource(resources.ModelResource):
         self.before_save_instance(instance, using_transactions, dry_run)
 
         if not dry_run:
-            user_id = User.objects.filter(
-                Q(landline1=instance.phone_number) | Q(landline2=instance.phone_number)).first().id
-            instance.user_id = user_id
-            instance.date = timestring.Date(instance.call_time).date
-            print(instance.user_id)
-            instance.save()
+            user = User.objects.filter(
+                Q(landline1=instance.phone_number) | Q(landline2=instance.phone_number)).first()
+            if user:
+                user_id = user.id
+                instance.user_id = user_id
+                instance.date = timestring.Date(instance.call_time).date
+                print(instance.user_id)
+                instance.save()
+            else: pass
         else:
             pass
 
@@ -93,7 +96,7 @@ class CallHistoryResource(resources.ModelResource):
 @admin.register(Call_History)
 class CallHistory_Admin(ImportExportModelAdmin):
     list_display = ['get_name', 'phone_number', 'town',  'duration']
-    list_filter = ['date']
+    list_filter = ['date', 'phone_number']
     resource_class = CallHistoryResource
 
     def get_name(self, obj):

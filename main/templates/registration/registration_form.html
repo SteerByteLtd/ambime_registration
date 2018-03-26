@@ -4,7 +4,7 @@
 {% load static %}
 
 {% block content %}
-    <body class=" login">
+    <div class=" login">
         <!-- BEGIN LOGIN -->
         <div class="content">
 
@@ -30,8 +30,12 @@
                                 <i class="fa fa-envelope"></i>
                             {% elif field.label == "Landline1" %}
                                 <i class="fa fa-phone"></i>
+                            {% elif field.label == "Network provider1" %}
+                                <i class="fa fa-connectdevelop"></i>
                             {% elif field.label == "Landline2" %}
                                 <i class="fa fa-phone-square"></i>
+                            {% elif field.label == "Network provider2" %}
+                                <i class="fa fa-connectdevelop"></i>
                             {% elif field.label == "Password" %}
                                 <i class="fa fa-lock"></i>
                             {% elif field.label == "Password confirmation" %}
@@ -39,12 +43,7 @@
                             {% elif field.label == "Referred Email" %}
                                 <i class="fa fa-child"></i>
                             {% endif %}
-
-                            {% if field.label == 'Network provider1' or field.label == 'Network provider2' %}
-                                {{ field | add_class:'select2 form-control'}}
-                            {% else %}
-                                {{ field | add_class:'form-control placeholder-no-fix'}}
-                            {% endif %}
+                            {{ field | add_class:'form-control placeholder-no-fix'}}
                         </div>
 
                         {% for error in field.errors %}
@@ -58,5 +57,5 @@
                 </div>
             </form>
         </div>
-    </body>
+    </div>
 {% endblock %}

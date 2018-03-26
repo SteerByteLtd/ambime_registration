@@ -23,11 +23,11 @@ from django.utils.timezone import now as datetime_now
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractUser
 
-NETWORK_CHOICE = (
-    ('', 'None'),
-    ('vodafone', 'VODAFONE'),
-    ('gsm', 'GSM')
-)
+# NETWORK_CHOICE = (
+#     ('', 'None'),
+#     ('vodafone', 'VODAFONE'),
+#     ('gsm', 'GSM')
+# )
 
 from .users import UserModel
 from .users import UserModelString
@@ -90,11 +90,12 @@ def send_email(addresses_to, ctx_dict, subject_template, body_template,
 
 class User(AbstractUser):
     landline1 = models.CharField(max_length=30)
-    network_provider1 = models.CharField(max_length=10, choices=NETWORK_CHOICE, default='', blank=True)
+    network_provider1 = models.CharField(max_length=10, default='', blank=True)
     landline2 = models.CharField(max_length=30, blank=True,)
-    network_provider2 = models.CharField(max_length=10, choices=NETWORK_CHOICE, default='', blank=True)
+    network_provider2 = models.CharField(max_length=10, default='', blank=True)
     referred_by = models.EmailField(max_length=30, blank=True)
     referral_count = models.IntegerField(default=0)
+    credit_count = models.IntegerField(default=0)
 
     class Meta:
         db_table = 'ambime_user'
@@ -103,7 +104,7 @@ class User(AbstractUser):
 
 
 class Call_History(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=30)
     town = models.CharField(max_length=50)
     county = models.CharField(max_length=50)

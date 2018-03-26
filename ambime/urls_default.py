@@ -12,10 +12,10 @@ urlpatterns = [
         TemplateView.as_view(template_name='index.html'),
         name='index'),
 
-    url(r'^accounts/',
+    url(r'',
         include('main.backends.default.urls')),
 
-    url(r'^accounts/profile/',
+    url(r'^profile/',
         login_required(UserProfileView.as_view(template_name='profile.html')),
         name='profile'),
 

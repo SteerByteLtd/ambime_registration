@@ -4,7 +4,10 @@ Login page
 ***/
 /* logo page */
 .login {
-  background-color: #666 !important; }
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
 
 .login .logo {
   margin: 60px auto 20px auto;
@@ -14,7 +17,7 @@ Login page
 .login .content {
   background: url(../img/bg-white-lock.png) repeat;
   width: 360px;
-  margin: 0 auto;
+  margin: 100px auto;
   margin-bottom: 0px;
   padding: 30px;
   padding-top: 20px;
@@ -45,9 +48,6 @@ Login page
 
 .login .content .form-control {
   background-color: #fff; }
-
-.login .content .forget-form {
-  display: none; }
 
 
 .login .content .form-title {

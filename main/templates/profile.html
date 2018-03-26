@@ -1,16 +1,141 @@
-{% extends "base.html" %}
+{% extends "registration/registration_base.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block title %}Account Profile{% endblock %}
 
+{% block style %}
+    {{ block.super }}
+    <link href="{% static 'pages/css/user-dashboard.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
-    <h1>Hello, {{ user.first_name }} {{ user.last_name }}</h1>
-    <div>Total AmbiMe Credit:{{ total_credit }}</div>
-    <div>Today's Credit Earned Credit:{{ today_credit }}</div>
-    <div>Cashback from Referrals:{{ total_referral_balance }}</div>
-    <div>Total Cashback:{{ total_cashback }}</div>
-    <div>
-        <p>{{ user.landline1 }}</p>
-        <p>{{ user.landline2 }}</p>
-    </div>
+    {% if user.is_superuser %}
+        <div style="height: 100vh; padding-top: 100px;">
+        <div class="container">
+            <div class="date-filter">
+                <form action="" method="get">
+                    {% csrf_token %}
+
+                    <select name="year-filter">
+                        {% for year in year_list %}
+                            {% if year == filter_year %}
+                                <option value="{{ year }}" selected>{{ year }}</option>
+                            {% else %}
+                                <option value="{{ year }}">{{ year }}</option>
+                            {% endif %}
+
+                        {% endfor %}
+                    </select>
+                    <select name="month-filter">
+                        {% for month in month_list %}
+                            {% if month == filter_month %}
+                                <option value="{{ forloop.counter }}" selected>{{ month }}</option>
+                            {% else %}
+                                <option value="{{ forloop.counter }}">{{ month }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-success" name="filter"> Search </button>
+                </form>
+            </div>
+            {% if workbook %}
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-calendar"></i>{{ filter_month }} in {{ filter_year }} WorkBook </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                            <a href="javascript:;" class="remove"> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-scrollable">
+                            <table class="table table-responsive">
+                                <thead>
+                                    <td>Name</td>
+                                    <td>Total Credits</td>
+                                    <td>Total Personal Balance</td>
+                                    <td>Referred By</td>
+                                    <td>Total Referral Balance</td>
+                                    <td>Total Balance</td>
+                                    <td>My Referral Count</td>
+                                </thead>
+                                {% for row in workbook %}
+                                    <tr>
+                                        <td>{{ row.user.first_name }} {{ row.user.last_name }}</td>
+                                        <td>{{ row.total_credit }}</td>
+                                        <td>{{ row.total_personal_balance }}</td>
+                                        <td>{{ row.referred_by }}</td>
+                                        <td>{{ row.total_ref_balance }}</td>
+                                        <td>{{ row.total_balance }}</td>
+                                        <td>{{ row.user.referral_count }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        </div>
+    {% else %}
+        <div class="container text-center message-box">
+            <h4>Hello {{ user.first_name }}</h4>
+            <br/>
+            <h4>AMBITION IS THE FIRST STEP TOWARDS</h4><br/>
+            <div class="success_text">SUCCESS</div>
+
+            <div class="logo-box">
+                <p>AmbiMe</p>
+                <div class="red-text">
+                    <h3>Enhancing The Ambition In You</h3>
+                </div>
+            </div>
+
+            <h1>YOUR {{ current_month }} DAILY UPDATES ARE ...</h1>
+            <h4 class="phone_number">{{ user.landline1 }}</h4>
+            <h4 class="phone_number">{{ user.landline2 }}</h4>
+            <div class="credit-view">
+                <div class="credit-info">
+                    <h3>Total AmbiMe Credit:</h3>
+                    {{ total_credit }}
+                </div>
+                <div class="credit-info">
+                    <h3>Today's Credit Earned Credit:</h3>
+                    {{ today_credit }}
+                </div>
+                <div class="credit-info">
+                    <h3>Number of Invites:</h3>
+                    {{ user.referral_count }}
+                </div>
+                <div class="credit-info">
+                    <h3>Cashback from Referrals:</h3>
+                    {{ total_referral_balance }}
+                </div>
+            </div>
+            <div>
+                <h1  style="font-weight: bold;">Total Cashback This Month:</h1>
+                <h1  style="font-weight: bold;">£{{ total_cashback }}</h1>
+            </div>
+            <h3  style="font-weight: bold;">YOUR LAST 4 MONTHS UPDATES ARE...</h3>
+            <div class="four-months-info">
+                {% for data in four_months_info %}
+                    <div class="details">
+                        <h3>{{ data.month_name }}</h3>
+                        <p>{{ data.cash }}</p>
+                        <h3>Status</h3>
+                        <p>{{ data.status }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="footer">
+                <h4>The maximum qualifying AmbiMe credit you can earn per number in a day is</h4>
+                <h4>400</h4>
+                <h4>DO NOT GO</h4>
+                <h4>OVER THIS LIMIT</h4>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

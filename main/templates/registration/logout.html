@@ -4,5 +4,13 @@
 {% block title %}{% trans "Logged out" %}{% endblock %}
 
 {% block content %}
-<p>{% trans "Successfully logged out" %}.</p>
+    <div class=" login">
+        <!-- BEGIN LOGIN -->
+        <div class="content" align="center">
+            <h3>You have been logged out</h3>
+            <a href="{% url 'index' %}">
+                <button type="submit" class="btn green"  style="width: 100%"> AmbiMe Homepage </button>
+            </a>
+        </div>
+    </div>
 {% endblock %}

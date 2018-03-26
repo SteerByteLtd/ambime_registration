@@ -3,7 +3,7 @@
 {% load custom_tag %}
 
 {% block content %}
-    <body class=" login">
+    <div class="login">
         <div class="content">
             <form action="." method="post">
             {% csrf_token %}
@@ -34,11 +34,7 @@
                     </div>
                 {% endfor %}
                 <div class="form-actions">
-                    <label class="rememberme mt-checkbox mt-checkbox-outline">
-                        <input type="checkbox" name="remember" value="1" /> Remember me
-                        <span></span>
-                    </label>
-                    <button type="submit" class="btn green pull-right"> Login </button>
+                    <button type="submit" class="btn green" style="width: 100%"> Login </button>
                 </div>
                 <div class="forget-password">
                     <h4>Forgot your password ?</h4>
@@ -51,20 +47,6 @@
                     </p>
                 </div>
             </form>
-
-            <form class="forget-form" action="index.html" method="post">
-                <h3>Forget Password ?</h3>
-                <p> Enter your e-mail address below to reset your password. </p>
-                <div class="form-group">
-                    <div class="input-icon">
-                        <i class="fa fa-envelope"></i>
-                        <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="email" /> </div>
-                </div>
-                <div class="form-actions">
-                    <button type="button" id="back-btn" class="btn red btn-outline">Back </button>
-                    <button type="submit" class="btn green pull-right"> Submit </button>
-                </div>
-            </form>
         </div>
-    </body>
+    </div>
 {% endblock %}
