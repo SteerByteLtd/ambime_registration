@@ -4,15 +4,15 @@
 
 {% block style %}
     {{ block.super }}
-    <link href="{% static 'landing_page/lib/animate-css/animate.min.css' %}" rel="stylesheet">
-    <link href="{% static 'landing_page/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/landing_page/style.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block header %}
     <header id="header">
         <div class="container">
             <div id="logo" class="pull-left">
-{#                <a href="#hero"><img src="{% static 'landing_page/img/logo.png' %}" alt="" title="" /></a>#}
+{#                <a href="#hero"><img src="{% static 'img/landing_page/logo.png' %}" alt="" title="" /></a>#}
             </div>
 
             <nav id="nav-menu-container">
@@ -169,7 +169,7 @@
 
             <div class="row">
                 <div class="col-md-3">
-                    <a class="portfolio-item" style="background-image: url({% static 'landing_page/img/portfolio-1.jpg' %});" href="">
+                    <a class="portfolio-item" style="background-image: url({% static 'img/landing_page/portfolio-1.jpg' %});" href="">
                         <div class="details">
                             <h4>Portfolio 1</h4>
                             <span>Alored dono par</span>
@@ -178,7 +178,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <a class="portfolio-item" style="background-image: url({% static 'landing_page/img/portfolio-2.jpg' %});" href="">
+                    <a class="portfolio-item" style="background-image: url({% static 'img/landing_page/portfolio-2.jpg' %});" href="">
                         <div class="details">
                             <h4>Portfolio 2</h4>
                             <span>Alored dono par</span>
@@ -187,7 +187,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <a class="portfolio-item" style="background-image: url({% static 'landing_page/img/portfolio-3.jpg' %});" href="">
+                    <a class="portfolio-item" style="background-image: url({% static 'img/landing_page/portfolio-3.jpg' %});" href="">
                         <div class="details">
                             <h4>Portfolio 3</h4>
                             <span>Alored dono par</span>
@@ -196,7 +196,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <a class="portfolio-item" style="background-image: url({% static 'landing_page/img/portfolio-4.jpg' %});" href="">
+                    <a class="portfolio-item" style="background-image: url({% static 'img/landing_page/portfolio-4.jpg' %});" href="">
                         <div class="details">
                             <h4>Portfolio 4</h4>
                             <span>Alored dono par</span>
@@ -205,7 +205,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <a class="portfolio-item" style="background-image: url({% static 'landing_page/img/portfolio-5.jpg' %});" href="">
+                    <a class="portfolio-item" style="background-image: url({% static 'img/landing_page/portfolio-5.jpg' %});" href="">
                         <div class="details">
                             <h4>Portfolio 5</h4>
                             <span>Alored dono par</span>
@@ -214,7 +214,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <a class="portfolio-item" style="background-image: url({% static 'landing_page/img/portfolio-6.jpg' %});" href="">
+                    <a class="portfolio-item" style="background-image: url({% static 'img/landing_page/portfolio-6.jpg' %});" href="">
                         <div class="details">
                             <h4>Portfolio 6</h4>
                             <span>Alored dono par</span>
@@ -223,7 +223,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <a class="portfolio-item" style="background-image: url({% static 'landing_page/img/portfolio-7.jpg' %});" href="">
+                    <a class="portfolio-item" style="background-image: url({% static 'img/landing_page/portfolio-7.jpg' %});" href="">
                         <div class="details">
                             <h4>Portfolio 7</h4>
                             <span>Alored dono par</span>
@@ -232,7 +232,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <a class="portfolio-item" style="background-image: url({% static 'landing_page/img/portfolio-8.jpg' %});" href="">
+                    <a class="portfolio-item" style="background-image: url({% static 'img/landing_page/portfolio-8.jpg' %});" href="">
                         <div class="details">
                             <h4>Portfolio 8</h4>
                             <span>Alored dono par</span>
@@ -438,11 +438,11 @@ Testimonials Section
 
 {% block script %}
     {{ block.super }}
-    <script src="{% static 'landing_page/lib/superfish/hoverIntent.js' %}"></script>
-    <script src="{% static 'landing_page/lib/superfish/superfish.min.js' %}"></script>
-    <script src="{% static 'landing_page/lib/morphext/morphext.min.js' %}"></script>
-    <script src="{% static 'landing_page/lib/wow/wow.min.js' %}"></script>
-    <script src="{% static 'landing_page/lib/stickyjs/sticky.js' %}"></script>
-    <script src="{% static 'landing_page/lib/easing/easing.js' %}"></script>
-    <script src="{% static 'landing_page/js/custom.js' %}"></script>
+    <script src="{% static 'scripts/superfish/hoverIntent.js' %}"></script>
+    <script src="{% static 'scripts/superfish/superfish.min.js' %}"></script>
+    <script src="{% static 'scripts/morphext/morphext.min.js' %}"></script>
+    <script src="{% static 'scripts/wow/wow.min.js' %}"></script>
+    <script src="{% static 'scripts/stickyjs/sticky.js' %}"></script>
+    <script src="{% static 'scripts/easing/easing.js' %}"></script>
+    <script src="{% static 'scripts/custom.js' %}"></script>
 {% endblock %}
