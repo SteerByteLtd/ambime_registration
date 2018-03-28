@@ -5,16 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ambime',
-        'USER': 'steerbyte',
-        'PASSWORD': '',
-        'HOST': '52.56.171.15',
-        'PORT': '5432'
-    },
-}
+ALLOWED_HOSTS = ['ambime.co.uk', '35.176.109.71', 'localhost', '127.0.0.1']
 
 INSTALLED_APPS = (
     'ambime',
@@ -30,9 +21,9 @@ INSTALLED_APPS = (
 AUTH_USER_MODEL = 'main.User'
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+WSGI_APPLICATION = 'ambime.wsgi.application'
 
-SECRET_KEY = '_'
+SECRET_KEY = 'ambime_website'
 
 SITE_ID = 1
 
@@ -66,8 +57,19 @@ MIDDLEWARE = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ambime',
+        'USER': 'postgres',
+        'PASSWORD': '',
+        'HOST': '35.176.109.71',
+        'PORT': '5432'
+    },
+}
+
 ACCOUNT_ACTIVATION_DAYS = 7
-REGISTRATION_EMAIL_SUBJECT_PREFIX = '[Django Registration Test App]'
+REGISTRATION_EMAIL_SUBJECT_PREFIX = '[Ambime]'
 SEND_ACTIVATION_EMAIL = True
 REGISTRATION_AUTO_LOGIN = False
 INCLUDE_AUTH_URLS = True
@@ -77,6 +79,6 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'vuk.torlakovic.93'
-EMAIL_HOST_PASSWORD = 'rlawndud199522'
-DEFAULT_FROM_EMAIL = 'vuk.torlakovic.93@gmail.com'
+EMAIL_HOST_USER = 'noreply@ambime.co.uk'
+EMAIL_HOST_PASSWORD = 'TerryDapo'
+DEFAULT_FROM_EMAIL = 'noreply@ambime.co.uk'
