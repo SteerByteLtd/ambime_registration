@@ -5,7 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
-ALLOWED_HOSTS = ['ambime.co.uk', '35.176.109.71', 'localhost', '127.0.0.1', '192.168.0.34']
+ALLOWED_HOSTS = ['ambime.co.uk', '35.176.109.71', 'localhost', '127.0.0.1']
 
 INSTALLED_APPS = (
     'ambime',
@@ -58,20 +58,12 @@ MIDDLEWARE = (
 )
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'ambime',
-    #     'USER': 'postgres',
-    #     'PASSWORD': '',
-    #     'HOST': '35.176.109.71',
-    #     'PORT': '5432'
-    # },
-        'default': {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'ambime',
-        'USER': 'kjy',
+        'USER': 'postgres',
         'PASSWORD': '',
-        'HOST': 'localhost',
+        'HOST': '35.176.109.71',
         'PORT': '5432'
     },
 }
