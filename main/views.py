@@ -76,28 +76,29 @@ class UserProfileView(View):
             users = User.objects.all()
             for user in users:
                 referred_by = User.objects.filter(email=user.referred_by).first()
-                referred_user_name = "{} {}".format(referred_by.first_name, referred_by.last_name)
-                total_credit = self.get_credits(user, date, True)
+                if referred_by:
+                    referred_user_name = "{} {}".format(referred_by.first_name, referred_by.last_name)
+                    total_credit = self.get_credits(user, date, True)
 
-                # Calculate Referral Count
-                total_referral_count = 0
-                referred_users = User.objects.filter(referred_by=user.email).all()
+                    # Calculate Referral Count
+                    total_referral_count = 0
+                    referred_users = User.objects.filter(referred_by=user.email).all()
 
-                for referred_user in referred_users:
-                    total_referral_count += self.get_credits(referred_user, date, True)
+                    for referred_user in referred_users:
+                        total_referral_count += self.get_credits(referred_user, date, True)
 
-                total_referral_balance = round(total_referral_count * 0.004, 2)
-                total_month_cashback = round(total_credit * 0.04 + total_referral_balance, 2)
+                    total_referral_balance = round(total_referral_count * 0.004, 2)
+                    total_month_cashback = round(total_credit * 0.04 + total_referral_balance, 2)
 
-                user_info = {
-                    'user': user,
-                    'total_credit': total_credit,
-                    'total_personal_balance': round(total_credit * 0.04, 2),
-                    'referred_by': referred_user_name,
-                    'total_ref_balance': total_referral_balance,
-                    'total_balance': total_month_cashback
-                }
-                result.append(user_info)
+                    user_info = {
+                        'user': user,
+                        'total_credit': total_credit,
+                        'total_personal_balance': round(total_credit * 0.04, 2),
+                        'referred_by': referred_user_name,
+                        'total_ref_balance': total_referral_balance,
+                        'total_balance': total_month_cashback
+                    }
+                    result.append(user_info)
 
             return render(request, self.template_name, {
                 'workbook': result,
