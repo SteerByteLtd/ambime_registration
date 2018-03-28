@@ -3,35 +3,33 @@
 <html lang="en">
 
 <head>
-    <title>{{ site.name }} {% trans "registration" %}</title>
+    <title>Please verify your email address</title>
 </head>
 
 <body>
-<p>
-    {% blocktrans with site_name=site.name %}
-    You (or someone pretending to be you) have asked to register an account at
-    {{ site_name }}.  If this wasn't you, please ignore this email
-    and your address will be removed from our records.
-    {% endblocktrans %}
-</p>
-<p>
-    {% blocktrans %}
-    To activate this account, please click the following link within the next
-    {{ expiration_days }} days:
-    {% endblocktrans %}
-</p>
+    <h3>
+        Hello
+    </h3>
+    <br/>
+    <p>
+        Thanks for getting started with AmbiMe! We need a little more information to complete your registration,
+        including confirmation of your email address. Click below to confirm your email address:
+    </p>
+    <br/>
 
-<p>
-    <a href="http://{{site.domain}}{% url 'registration_activate' activation_key %}">
-        {{site.domain}}{% url 'registration_activate' activation_key %}
-    </a>
-</p>
-<p>
-    {% blocktrans with site_name=site.name %}
-    Sincerely,
-    {{ site_name }} Management
-    {% endblocktrans %}
-</p>
+    <p>
+        To activate this account, please click the following link within the next
+        {{ expiration_days }} days:
+    </p>
+    <p>
+        <a href="http://{{site.domain}}{% url 'registration_activate' activation_key %}">
+            {{site.domain}}{% url 'registration_activate' activation_key %}
+        </a>
+    </p>
+    <br/>
+    <p>
+        Sincerely, Ambime Team
+    </p>
 </body>
 
 </html>
