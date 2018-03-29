@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Q
@@ -10,16 +11,22 @@ from .users import UsernameField
 
 
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(UserAdmin):
     list_display = ['username', 'get_name', 'email', 'landline1', 'landline2', 'credit_count', 'is_active']
     search_fields = ('username', 'first_name', 'last_name')
     list_filter = ['is_superuser']
+    fieldsets = (
+        UserAdmin.fieldsets[0],
+        ('Personal Info', {'fields': ('first_name', 'last_name', 'email', 'landline1', 'network_provider1', 'landline2',
+                                      'network_provider2', 'referred_by', 'referral_count', 'credit_count')}),
+        UserAdmin.fieldsets[2],
+        UserAdmin.fieldsets[3],
+    )
 
     def get_name(self, obj):
         return ("{} {}").format(obj.first_name, obj.last_name)
 
     get_name.short_description = "Full Name"
-
 
 @admin.register(RegistrationProfile)
 class RegistrationAdmin(admin.ModelAdmin):

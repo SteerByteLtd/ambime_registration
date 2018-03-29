@@ -6,6 +6,7 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+
 .Python
 env/
 bin/
@@ -23,7 +24,7 @@ var/
 *.egg
 include/
 .eggs/
-settings.py
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt

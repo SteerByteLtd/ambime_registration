@@ -46,9 +46,10 @@ urlpatterns = [
     url(r'^password/reset/$',
         auth_views.PasswordResetView.as_view(
             template_name='registration/password_reset_form.html',
-            from_email='noreply@ambime.co.uk',
+            # from_email='noreply@ambime.co.uk',
             email_template_name='registration/password_reset_email.html',
-            success_url=reverse_lazy('auth_password_reset_done')),
+            success_url=reverse_lazy('auth_password_reset_done')
+        ),
         name='auth_password_reset'),
     url(r'^password/reset/complete/$',
         auth_views.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html',),

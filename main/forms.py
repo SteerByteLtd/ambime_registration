@@ -38,12 +38,13 @@ class RegistrationForm(UserCreationForm):
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
     email = forms.EmailField(label=_("E-mail"), required=True)
-    referred_by = forms.EmailField(label=_("Referred Email"))
+    referred_by = forms.EmailField(label=_("Referred Email"), required=True)
 
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', "email", 'landline1', 'network_provider1', 'landline2',
                   'network_provider2', 'referred_by')
+
 
     def clean_email(self):
         if User.objects.filter(email__iexact=self.cleaned_data['email']):

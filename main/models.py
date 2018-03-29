@@ -93,7 +93,7 @@ class User(AbstractUser):
     network_provider1 = models.CharField(max_length=10, default='', blank=True)
     landline2 = models.CharField(max_length=30, blank=True,)
     network_provider2 = models.CharField(max_length=10, default='', blank=True)
-    referred_by = models.EmailField(max_length=30, blank=True)
+    referred_by = models.EmailField(max_length=30)
     referral_count = models.IntegerField(default=0)
     credit_count = models.IntegerField(default=0)
 
