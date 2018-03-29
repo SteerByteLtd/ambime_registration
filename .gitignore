@@ -1,3 +1,4 @@
+settings.py
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -6,7 +7,6 @@ __pycache__/
 *.so
 
 # Distribution / packaging
-settings.py
 .Python
 env/
 bin/
