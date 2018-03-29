@@ -1,5 +1,14 @@
 import os
+from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
+def get_env_variable(name):
+    try:
+	return os.environ[name]
+    except KeyError:
+	error_msg = "Set the %s environment variable" % name
+	raise ImproperlyConfigured(error_msg)
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -19,11 +28,11 @@ INSTALLED_APPS = (
     'import_export'
 )
 AUTH_USER_MODEL = 'main.User'
-DEBUG = True
+DEBUG = False
 
 WSGI_APPLICATION = 'ambime.wsgi.application'
 
-SECRET_KEY = 'ambime_website'
+SECRET_KEY = get_env_variable('SECRET_KEY')
 
 SITE_ID = 1
 

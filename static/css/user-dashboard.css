@@ -1,0 +1,47 @@
+.message-box{
+    background-color: #60c4e9;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.message-box .success_text{
+    font-size: 100px;
+    line-height: 100px;
+}
+.message-box .logo-box{
+    height: 300px;
+    background-color: black;
+    margin: 30px 20px 30px 20px;
+    padding-top: 80px;
+}
+.message-box .logo-box p{
+    font-weight: bold;
+    font-size: 100px;
+    color: white;
+    line-height: 100px;
+}
+.message-box .logo-box .red-text{
+    display: block;
+    margin: 0 50px;
+    background-color: #f43b5f;
+}
+
+.message-box .phone_number{
+    color: white;
+}
+.message-box .credit-view{
+    display: flex;
+}
+.message-box .credit-view .credit-info{
+    flex: 1;
+}
+.message-box .footer{
+    color: white;
+}
+
+.message-box .four-months-info{
+    display: flex;
+}
+.message-box .four-months-info .details{
+    flex: 1;
+}
