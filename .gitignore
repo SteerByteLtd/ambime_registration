@@ -6,7 +6,7 @@ __pycache__/
 *.so
 
 # Distribution / packaging
-
+settings.py
 .Python
 env/
 bin/
